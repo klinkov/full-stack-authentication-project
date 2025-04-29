@@ -1,0 +1,46 @@
+{
+  "realm": "talent-realm",
+  "enabled": true,
+  "clients": [
+    {
+      "clientId": "talent-client",
+      "enabled": true,
+      "publicClient": true,
+      "redirectUris": ["http://localhost:5173/*"],
+      "webOrigins": ["http://localhost:5173"],
+      "protocolMappers": [
+        {
+          "name": "roles",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-realm-role-mapper",
+          "config": {
+            "multivalued": "true",
+            "userinfo.token.claim": "true",
+            "access.token.claim": "true",
+            "claim.name": "roles",
+            "jsonType.label": "String"
+          }
+        }
+      ]
+    }
+  ],
+  "roles": {
+    "realm": [
+      {"name": "user", "description": "Regular user"},
+      {"name": "admin", "description": "Administrator"}
+    ]
+  },
+  "smtpServer": {
+    "host": "smtp.gmail.com",
+    "port": "587",
+    "ssl": "true",
+    "starttls": "true",
+    "auth": "true",
+    "user": "klinkov@gmail.com",
+    "password": "your-app-password",
+    "from": "your-email@gmail.com"
+  },
+  "emailTemplate": {
+    "enabled": true
+  }
+}
