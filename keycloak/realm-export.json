@@ -1,6 +1,12 @@
 {
   "realm": "talent-realm",
   "enabled": true,
+  "registrationAllowed": true,
+  "registrationEmailAsUsername": false,
+  "rememberMe": true,
+  "verifyEmail": true,
+  "bruteForceProtected": true,
+  "permanentLockout": false,
   "clients": [
     {
       "clientId": "talent-client",
@@ -31,16 +37,17 @@
     ]
   },
   "smtpServer": {
-    "host": "smtp.gmail.com",
-    "port": "587",
-    "ssl": "true",
-    "starttls": "true",
+    "replyToDisplayName": "MailDev NoReply",
+    "starttls": "false",
     "auth": "true",
-    "user": "klinkov@gmail.com",
-    "password": "your-app-password",
-    "from": "your-email@gmail.com"
-  },
-  "emailTemplate": {
-    "enabled": true
+    "envelopeFrom": "",
+    "ssl": "false",
+    "password": "maildev",
+    "port": "1025",
+    "host": "maildev",
+    "replyTo": "",
+    "from": "no-reply@talent.com",
+    "fromDisplayName": "Talent Realm",
+    "user": "maildev"
   }
 }
