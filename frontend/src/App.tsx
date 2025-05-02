@@ -1,51 +1,79 @@
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
-import { Routes, Route, Navigate } from 'react-router-dom';
-import { Layout } from 'antd';
+import { authStore } from './stores/authStore';
 import LoginPage from './pages/LoginPage';
-import RegisterPage from './pages/RegisterPage';
-import AccountPage from './pages/AccountPage';
-import PaymentPage from './pages/PaymentPage';
+import RegistrationPage from './pages/RegistrationPage';
+import ProfilePage from './pages/ProfilePage';
 import RecoveryPage from './pages/RecoveryPage';
-import authStore from './store/authStore';
-import PrivateRoute from './components/PrivateRoute';
-
-const { Header, Content } = Layout;
+import LogoutPage from './pages/LogoutPage';
+import { ConfigProvider } from 'antd';
 
 const App = observer(() => {
-    return (
-        <Layout>
-            <Header>
-                <div>Talent Form</div>
-                {authStore.isAuthenticated && (
-                    <a onClick={() => authStore.logout()}>Logout</a>
-                )}
-            </Header>
-            <Content>
-                <Routes>
-                    <Route path="/login" element={<LoginPage />} />
-                    <Route path="/register" element={<RegisterPage />} />
-                    <Route path="/recovery" element={<RecoveryPage />} />
-                    <Route
-                        path="/account"
-                        element={
-                            <PrivateRoute>
-                                <AccountPage />
-                            </PrivateRoute>
-                        }
-                    />
-                    <Route
-                        path="/payment"
-                        element={
-                            <PrivateRoute>
-                                <PaymentPage />
-                            </PrivateRoute>
-                        }
-                    />
-                    <Route path="/" element={<Navigate to="/login" />} />
-                </Routes>
-            </Content>
-        </Layout>
-    );
+  return (
+    <ConfigProvider
+      theme={{
+        token: {
+          colorPrimary: '#1890ff',
+        },
+      }}
+    >
+      <BrowserRouter>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              authStore.isAuthenticated ? (
+                <Navigate to="/profile" replace />
+              ) : (
+                <Navigate to="/login" replace />
+              )
+            }
+          />
+          <Route
+            path="/login"
+            element={
+              authStore.isAuthenticated ? (
+                <Navigate to="/profile" replace />
+              ) : (
+                <LoginPage />
+              )
+            }
+          />
+          <Route
+            path="/register"
+            element={
+              authStore.isAuthenticated ? (
+                <Navigate to="/profile" replace />
+              ) : (
+                <RegistrationPage />
+              )
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              authStore.isAuthenticated ? (
+                <ProfilePage />
+              ) : (
+                <Navigate to="/login" replace />
+              )
+            }
+          />
+          <Route
+            path="/recovery"
+            element={
+              authStore.isAuthenticated ? (
+                <Navigate to="/profile" replace />
+              ) : (
+                <RecoveryPage />
+              )
+            }
+          />
+          <Route path="/logout" element={<LogoutPage />} />
+        </Routes>
+      </BrowserRouter>
+    </ConfigProvider>
+  );
 });
 
 export default App;

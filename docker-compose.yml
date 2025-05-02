@@ -4,7 +4,7 @@ services:
   postgres:
     image: postgres:15
     environment:
-      POSTGRES_DB: talent_form
+      POSTGRES_DB: talent
       POSTGRES_USER: talent_user
       POSTGRES_PASSWORD: talent_pass
     volumes:
@@ -19,7 +19,7 @@ services:
       KEYCLOAK_ADMIN: admin
       KEYCLOAK_ADMIN_PASSWORD: admin
       KC_DB: postgres
-      KC_DB_URL: jdbc:postgresql://postgres:5432/talent_form
+      KC_DB_URL: jdbc:postgresql://postgres:5432/talent
       KC_DB_USERNAME: talent_user
       KC_DB_PASSWORD: talent_pass
       # SMTP-настройки для MailDev
@@ -37,39 +37,6 @@ services:
       - postgres
       - maildev
 
-  backend:
-    build:
-      context: ./backend
-      dockerfile: Dockerfile
-    environment:
-      DATABASE_URL: postgresql://talent_user:talent_pass@postgres:5432/talent_form
-      KEYCLOAK_URL: http://keycloak:8080
-      PORT: 3000
-      # Настройки для MailDev (SMTP)
-      SMTP_HOST: maildev
-      SMTP_PORT: 1025
-      SMTP_SECURE: "false"
-      EMAIL_FROM: no-reply@example.com
-    ports:
-      - "3000:3000"
-    depends_on:
-      - postgres
-      - keycloak
-
-  frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
-    ports:
-      - "5173:5173"
-    environment:
-      VITE_API_URL: http://localhost:3000
-      VITE_KEYCLOAK_URL: http://localhost:8080
-      VITE_KEYCLOAK_REALM: talent-realm
-      VITE_KEYCLOAK_CLIENT_ID: talent-client
-    depends_on:
-      - backend
-
   maildev:
     image: maildev/maildev
     ports:
@@ -79,6 +46,47 @@ services:
       MAILDEV_INCOMING_USER: maildev
       MAILDEV_INCOMING_PASS: maildev
     restart: unless-stopped
+
+
+  # backend:
+  #   build:
+  #     context: ./backend
+  #     dockerfile: Dockerfile
+  #   environment:
+  #     DB_HOST=localhost
+  #     DB_PORT=5432
+  #     DB_USERNAME=talent_user
+  #     DB_PASSWORD=talent_pass
+  #     DB_DATABASE=talent
+  #     KEYCLOAK_JWKS_URI: http://keycloak:8080/realms/talent/protocol/openid-connect/certs
+  #     PORT: 3000
+  #     # Настройки для MailDev (SMTP)
+  #     SMTP_HOST: maildev
+  #     SMTP_PORT: 1025
+  #     SMTP_SECURE: "false"
+  #     EMAIL_FROM: no-reply@example.com
+  #   ports:
+  #     - "3000:3000"
+  #   depends_on:
+  #     - postgres
+  #     - keycloak
+
+  # frontend:
+  #   build:
+  #     context: ./frontend
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - "3030:3030"
+  #   environment:
+  #     VITE_API_URL: http://localhost:3000
+  #     VITE_KEYCLOAK_URL: http://localhost:8080
+  #     VITE_KEYCLOAK_REALM: talent-realm
+  #     VITE_KEYCLOAK_CLIENT_ID: talent-client
+  #   depends_on:
+  #     keycloak:
+  #       condition: service_started
+  #     backend:
+  #       condition: service_started
 
 volumes:
   postgres_data:

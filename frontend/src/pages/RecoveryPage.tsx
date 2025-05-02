@@ -1,46 +1,56 @@
-import { Form, Input, Button, message } from 'antd';
+import { Form, Input, Button, Card, message } from 'antd';
 import { observer } from 'mobx-react-lite';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
+import { authStore } from '../stores/authStore';
 
 const RecoveryPage = observer(() => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
+  const [form] = Form.useForm();
 
-    const onFinish = async (values: { email: string }) => {
-        try {
-            // Note: Keycloak handles password recovery via its UI or API.
-            // This is a placeholder for triggering a recovery email.
-            // In a real implementation, you might call a backend endpoint or Keycloak API.
-            message.success('Password recovery email sent. Please check your inbox.');
-            navigate('/login');
-        } catch (error) {
-            message.error('Failed to send recovery email');
-        }
-    };
+  const onFinish = async (values: { email: string }) => {
+    try {
+      await authStore.requestPasswordReset(values.email);
+      message.success('Password reset instructions have been sent to your email');
+      navigate('/login');
+    } catch {
+      // Error is handled in the store
+    }
+  };
 
-    return (
-        <div style={{ maxWidth: 400, margin: 'auto', padding: 24 }}>
-            <h2>Password Recovery</h2>
-            <Form onFinish={onFinish}>
-                <Form.Item
-                    name="email"
-                    rules={[
-                        { required: true, message: 'Please input your email!' },
-                        { type: 'email', message: 'Please enter a valid email!' },
-                    ]}
-                >
-                    <Input placeholder="Email" />
-                </Form.Item>
-                <Form.Item>
-                    <Button type="primary" htmlType="submit" block>
-                        Send Recovery Email
-                    </Button>
-                </Form.Item>
-                <Button type="link" onClick={() => navigate('/login')}>
-                    Back to Login
-                </Button>
-            </Form>
-        </div>
-    );
+  return (
+    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh' }}>
+      <Card title="Password Recovery" style={{ width: 400 }}>
+        <Form
+          form={form}
+          name="recovery"
+          onFinish={onFinish}
+          autoComplete="off"
+          layout="vertical"
+        >
+          <Form.Item
+            label="Email"
+            name="email"
+            rules={[
+              { required: true, message: 'Please input your email!' },
+              { type: 'email', message: 'Please enter a valid email!' }
+            ]}
+          >
+            <Input />
+          </Form.Item>
+
+          <Form.Item>
+            <Button type="primary" htmlType="submit" loading={authStore.isLoading} block>
+              Send Reset Instructions
+            </Button>
+          </Form.Item>
+
+          <div style={{ textAlign: 'center' }}>
+            Remember your password? <Link to="/login">Login</Link>
+          </div>
+        </Form>
+      </Card>
+    </div>
+  );
 });
 
 export default RecoveryPage;
