@@ -55,13 +55,14 @@ class AuthStore {
     }
   }
 
-  async register(email: string, password: string, name: string) {
+  async register(email: string, password: string, firstName: string, lastName: string) {
     try {
       this.setLoading(true);
       const response = await axios.post('http://localhost:3000/auth/register', {
         email,
         password,
-        name,
+        firstName,
+        lastName,
       });
       const { accessToken, refreshToken, user } = response.data;
       localStorage.setItem('accessToken', accessToken);

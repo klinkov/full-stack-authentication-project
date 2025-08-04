@@ -71,14 +71,14 @@ npm run start:dev
 ```
 VITE_API_URL=http://localhost:3000
 VITE_KEYCLOAK_URL=http://localhost:8080
-VITE_KEYCLOAK_REALM=talent-form
-VITE_KEYCLOAK_CLIENT_ID=talent-client
+VITE_KEYCLOAK_REALM=automation-form
+VITE_KEYCLOAK_CLIENT_ID=automation-client
 ```
 
 ### Backend (.env)
 ```
-DATABASE_URL=postgresql://talent_user:talent_pass@localhost:5432/talent_form
-KEYCLOAK_JWKS_URI=http://localhost:8080/realms/talent-form/protocol/openid-connect/certs
+DATABASE_URL=postgresql://automation_user:automation_pass@localhost:5432/automation_form
+KEYCLOAK_JWKS_URI=http://localhost:8080/realms/automation-form/protocol/openid-connect/certs
 PORT=3000
 ```
 

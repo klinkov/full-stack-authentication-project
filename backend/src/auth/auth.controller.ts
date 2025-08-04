@@ -41,8 +41,18 @@ export class AuthController {
         body.firstName,
         body.lastName,
       );
-    } catch {
-      throw new UnauthorizedException('Registration failed');
+    } catch (error) {
+
+      console.error(`Failed`, JSON.stringify(error));
+
+      if (error instanceof UnauthorizedException) {
+        throw error;
+      }
+      throw new UnauthorizedException({
+        message: 'Registration failed',
+        error: 'Unauthorized',
+        statusCode: 401
+      });
     }
   }
 

@@ -21,8 +21,8 @@ import { AuthModule } from './auth/auth.module';
     }),
     KeycloakConnectModule.register({
       authServerUrl: process.env.KEYCLOAK_URL || 'http://localhost:8080',
-      realm: process.env.KEYCLOAK_REALM || 'talent-grok',
-      clientId: process.env.KEYCLOAK_CLIENT_ID || 'talent-grok-client',
+              realm: process.env.KEYCLOAK_REALM || 'automation-grok',
+        clientId: process.env.KEYCLOAK_CLIENT_ID || 'automation-grok-client',
       secret: process.env.KEYCLOAK_CLIENT_SECRET || '',
     }),
     AuthModule,

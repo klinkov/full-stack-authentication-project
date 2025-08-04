@@ -4,9 +4,9 @@ services:
   postgres:
     image: postgres:15
     environment:
-      POSTGRES_DB: talent
-      POSTGRES_USER: talent_user
-      POSTGRES_PASSWORD: talent_pass
+      POSTGRES_DB: automation
+      POSTGRES_USER: automation_user
+      POSTGRES_PASSWORD: automation_pass
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./docker/postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
@@ -19,9 +19,9 @@ services:
       KEYCLOAK_ADMIN: admin
       KEYCLOAK_ADMIN_PASSWORD: admin
       KC_DB: postgres
-      KC_DB_URL: jdbc:postgresql://postgres:5432/talent
-      KC_DB_USERNAME: talent_user
-      KC_DB_PASSWORD: talent_pass
+      KC_DB_URL: jdbc:postgresql://postgres:5432/automation
+      KC_DB_USERNAME: automation_user
+      KC_DB_PASSWORD: automation_pass
       # SMTP-настройки для MailDev
       KC_HOSTNAME: localhost
       KC_HOSTNAME_STRICT: "false"
@@ -55,10 +55,10 @@ services:
   #   environment:
   #     DB_HOST=localhost
   #     DB_PORT=5432
-  #     DB_USERNAME=talent_user
-  #     DB_PASSWORD=talent_pass
-  #     DB_DATABASE=talent
-  #     KEYCLOAK_JWKS_URI: http://keycloak:8080/realms/talent/protocol/openid-connect/certs
+  #     DB_USERNAME=automation_user
+  #     DB_PASSWORD=automation_pass
+  #     DB_DATABASE=automation
+  #     KEYCLOAK_JWKS_URI: http://keycloak:8080/realms/automation/protocol/openid-connect/certs
   #     PORT: 3000
   #     # Настройки для MailDev (SMTP)
   #     SMTP_HOST: maildev
@@ -80,8 +80,8 @@ services:
   #   environment:
   #     VITE_API_URL: http://localhost:3000
   #     VITE_KEYCLOAK_URL: http://localhost:8080
-  #     VITE_KEYCLOAK_REALM: talent-realm
-  #     VITE_KEYCLOAK_CLIENT_ID: talent-client
+  #     VITE_KEYCLOAK_REALM: automation-realm
+  #     VITE_KEYCLOAK_CLIENT_ID: automation-client
   #   depends_on:
   #     keycloak:
   #       condition: service_started

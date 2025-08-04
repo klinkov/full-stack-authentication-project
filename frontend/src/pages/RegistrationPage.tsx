@@ -7,9 +7,19 @@ const RegistrationPage = observer(() => {
   const navigate = useNavigate();
   const [form] = Form.useForm();
 
-  const onFinish = async (values: { email: string; password: string; name: string }) => {
+  const onFinish = async (values: {
+    email: string;
+    password: string;
+    firstName: string;
+    lastName: string;
+  }) => {
     try {
-      await authStore.register(values.email, values.password, values.name);
+      await authStore.register(
+        values.email,
+        values.password,
+        values.firstName,
+        values.lastName
+      );
       message.success('Registration successful');
       navigate('/profile');
     } catch {
@@ -28,9 +38,17 @@ const RegistrationPage = observer(() => {
           layout="vertical"
         >
           <Form.Item
-            label="Name"
-            name="name"
-            rules={[{ required: true, message: 'Please input your name!' }]}
+            label="First Name"
+            name="firstName"
+            rules={[{ required: true, message: 'Please input your first name!' }]}
+          >
+            <Input />
+          </Form.Item>
+
+          <Form.Item
+            label="Last Name"
+            name="lastName"
+            rules={[{ required: true, message: 'Please input your last name!' }]}
           >
             <Input />
           </Form.Item>
