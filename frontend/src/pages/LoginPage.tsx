@@ -3,6 +3,7 @@ import { observer } from 'mobx-react-lite';
 import { useNavigate, Link } from 'react-router-dom';
 import { authStore } from '../stores/authStore';
 import { useEffect } from 'react';
+import '../assets/common.css';
 
 const LoginPage = observer(() => {
   const navigate = useNavigate();
@@ -25,7 +26,7 @@ const LoginPage = observer(() => {
   };
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh' }}>
+    <div className="centerWidget">
       <Card title="Login" style={{ width: 400 }}>
         <Form
           form={form}

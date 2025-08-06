@@ -8,7 +8,7 @@ services:
       POSTGRES_USER: automation_user
       POSTGRES_PASSWORD: automation_pass
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+#      - ./docker/postgres/data:/var/lib/postgresql/data
       - ./docker/postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
       - "5432:5432"
