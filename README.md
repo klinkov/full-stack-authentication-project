@@ -107,8 +107,16 @@ PORT=3000
 4. Push to the branch
 5. Create a new Pull Request
 
-Some screenshots:
-* Registration ![Register.png](doc/Register.png)
-* Login ![Login.png](doc/Login.png)
-* Profile / Change Profile ![Profile-Change_Profile.png](doc/Profile-Change_Profile.png)
-* Profile / Change password ![Profile-Change_Password.png](doc/Profile-Change_Password.png)
+## Some screenshots
+
+### Registration
+![Register.png](doc/Register.png)
+
+### Login
+![Login.png](doc/Login.png)
+
+### Profile / Change Profile 
+![Profile-Change_Profile.png](doc/Profile-Change_Profile.png)
+
+### Profile / Change password 
+![Profile-Change_Password.png](doc/Profile-Change_Password.png)
